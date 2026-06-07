@@ -1583,19 +1583,21 @@ async function enviarSheets(docId) {
   };
   try { await navigator.clipboard.writeText(Object.values(row).join('\t')); } catch {}
   const wh = document.getElementById('webhookUrl').value.trim();
-  if (wh) {
+  if (wh && !window._sheetsSent) {
+    window._sheetsSent = true;
     try {
+      row.send_id = Date.now().toString();
       await fetch(wh, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
         body: JSON.stringify(row)
       });
-      await new Promise(res => setTimeout(res, 1000));
       document.getElementById('sheetsCheckTxt').textContent = 'Google Sheets: enviado correctamente ✓';
     } catch {
       document.getElementById('sheetsCheckTxt').textContent = 'Google Sheets: error de conexión';
     }
+    setTimeout(() => { window._sheetsSent = false; }, 5000);
   }
 }
 
