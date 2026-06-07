@@ -1583,21 +1583,37 @@ async function enviarSheets(docId) {
   };
   try { await navigator.clipboard.writeText(Object.values(row).join('\t')); } catch {}
   const wh = document.getElementById('webhookUrl').value.trim();
-  if (wh && !window._sheetsSent) {
-    window._sheetsSent = true;
+  if (wh) {
     try {
-      row.send_id = Date.now().toString();
-      await fetch(wh, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: JSON.stringify(row)
-      });
+      // Use iframe form submit - only fires once, no CORS issues
+      const iframe = document.createElement('iframe');
+      iframe.name = 'hidden_frame_' + Date.now();
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = wh;
+      form.target = iframe.name;
+      form.style.display = 'none';
+      
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'payload';
+      input.value = JSON.stringify(row);
+      form.appendChild(input);
+      document.body.appendChild(form);
+      form.submit();
+      
+      setTimeout(() => {
+        document.body.removeChild(form);
+        document.body.removeChild(iframe);
+      }, 3000);
+      
       document.getElementById('sheetsCheckTxt').textContent = 'Google Sheets: enviado correctamente ✓';
     } catch {
       document.getElementById('sheetsCheckTxt').textContent = 'Google Sheets: error de conexión';
     }
-    setTimeout(() => { window._sheetsSent = false; }, 5000);
   }
 }
 
