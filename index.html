@@ -1585,31 +1585,12 @@ async function enviarSheets(docId) {
   const wh = document.getElementById('webhookUrl').value.trim();
   if (wh) {
     try {
-      // Use iframe form submit - only fires once, no CORS issues
-      const iframe = document.createElement('iframe');
-      iframe.name = 'hidden_frame_' + Date.now();
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-      
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = wh;
-      form.target = iframe.name;
-      form.style.display = 'none';
-      
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = 'payload';
-      input.value = JSON.stringify(row);
-      form.appendChild(input);
-      document.body.appendChild(form);
-      form.submit();
-      
-      setTimeout(() => {
-        document.body.removeChild(form);
-        document.body.removeChild(iframe);
-      }, 3000);
-      
+      await fetch(wh, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'payload=' + encodeURIComponent(JSON.stringify(row))
+      });
       document.getElementById('sheetsCheckTxt').textContent = 'Google Sheets: enviado correctamente ✓';
     } catch {
       document.getElementById('sheetsCheckTxt').textContent = 'Google Sheets: error de conexión';
