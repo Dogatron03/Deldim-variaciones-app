@@ -1460,12 +1460,13 @@ async function generar() {
     /* DESCRIPCIÓN */
     secTitle(doc,'DESCRIPCIÓN DEL CAMBIO / VARIACIÓN',M,y); y+=8;
     const desc = document.getElementById('descripcion').value;
-    const descLines = doc.splitTextToSize(desc, CW-8);
-    const descH = Math.max(descLines.length*5.5+8,20);
+    doc.setFontSize(9.5); doc.setFont('helvetica','normal');
+    const descLines = doc.splitTextToSize(desc, CW-10);
+    const descH = Math.max(descLines.length*5.5+10,20);
     doc.setFillColor(255,255,255); doc.setDrawColor(217,213,206); doc.setLineWidth(0.4);
     doc.roundedRect(M,y,CW,descH,2,2,'FD');
-    doc.setTextColor(28,28,28); doc.setFont('helvetica','normal'); doc.setFontSize(10);
-    doc.text(descLines, M+4, y+7);
+    doc.setTextColor(28,28,28);
+    doc.text(descLines, M+5, y+7);
     y += descH+4;
 
     const ub = document.getElementById('ubicacion').value;
