@@ -1584,9 +1584,9 @@ async function enviarSheets(docId) {
   const wh = document.getElementById('webhookUrl').value.trim();
   if (wh) {
     try {
-      // Send as URL params via GET - most reliable for Apps Script
-      const params = new URLSearchParams({ payload: JSON.stringify(row) });
-      await fetch(wh + '?' + params.toString(), { method:'GET', mode:'no-cors' });
+      // Encode payload properly for Apps Script
+      const payload = encodeURIComponent(JSON.stringify(row));
+      await fetch(wh + '?payload=' + payload, { method:'GET', mode:'no-cors' });
       document.getElementById('sheetsCheckTxt').textContent = 'Google Sheets: enviado correctamente ✓';
     } catch {
       document.getElementById('sheetsCheckTxt').textContent = 'Google Sheets: error de conexión';
