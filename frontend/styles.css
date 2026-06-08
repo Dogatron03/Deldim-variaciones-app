@@ -82,7 +82,7 @@ body {
 .flabel:first-child { margin-top: 0; }
 .req { color: var(--red); }
 
-input[type=text], input[type=email], textarea, select {
+input[type=text], input[type=email], input[type=password], textarea, select {
     width: 100%; background: var(--bg); border: 2px solid var(--border);
     border-radius: 10px; padding: 12px 14px;
     font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 600; color: var(--ink);

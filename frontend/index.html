@@ -37,6 +37,7 @@
             <h1>Partes de Variación</h1>
             <p>DelDim Reformas S.L. · Registro de cambios</p>
         </div>
+        <button class="btn btn-outline btn-sm" id="logoutBtn" onclick="logout()" style="display:none; max-width: 80px;">Salir</button>
         <div class="doc-pill" id="docPill">VAR-···</div>
     </div>
 </header>
@@ -45,7 +46,26 @@
 </div>
 
 <div class="main">
-    <div id="formArea">
+    <div id="authArea">
+        <div class="card" style="max-width: 400px; margin: 40px auto;">
+            <div class="card-head" style="justify-content: center;">
+                <span class="card-title">Acceso Técnico</span>
+            </div>
+            <div class="card-body">
+                <form id="loginForm" onsubmit="login(event)">
+                    <span class="flabel">Usuario</span>
+                    <input type="text" id="username" required placeholder="Tu usuario">
+                    <span class="flabel">Contraseña</span>
+                    <input type="password" id="password" required placeholder="••••••••">
+                    <button type="submit" class="btn btn-orange btn-xl" style="margin-top: 20px;" id="loginBtn">
+                        Entrar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="formArea" style="display:none">
 
         <!-- 1 IDENTIFICACIÓN -->
         <div class="card">
