@@ -1,5 +1,5 @@
 const CACHE = 'deldim-var-v1';
-const OFFLINE = './index.html';
+const OFFLINE = '/index.html';
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.add(OFFLINE)));
