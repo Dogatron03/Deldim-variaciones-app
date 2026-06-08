@@ -5,6 +5,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>DelDim · Partes de Obra</title>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#E05C1A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Variaciones">
 <script>
 /** @license
  *
@@ -1637,6 +1644,14 @@ function toast(msg, type='ok') {
   const t = document.getElementById('toastEl');
   t.textContent = msg; t.className = 'toast show '+type;
   setTimeout(()=>{t.className='toast';},3000);
+}
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(r => console.log('SW registrado:', r.scope))
+      .catch(e => console.warn('SW error:', e));
+  });
 }
 </script>
 </body>
