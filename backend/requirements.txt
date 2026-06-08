@@ -1,1 +1,5 @@
 fastapi[standard]
+pyjwt
+pwdlib[argon2]
+python-dotenv
+sqlmodel
